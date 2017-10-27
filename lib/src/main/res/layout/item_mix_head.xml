@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/tv_mix_head"
+        android:hint="写个标题吧"
+        android:textStyle="bold"
+        android:padding="15dp"
+        android:textSize="20dp"
+        android:textColor="#ff222222"
+        android:layout_width="match_parent"
+        android:background="@null"
+        android:layout_height="wrap_content"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#aaa"
+        />
+</LinearLayout>

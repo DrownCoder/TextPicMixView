@@ -6,9 +6,6 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import com.study.xuan.lib.MixViewHolder;
-import com.study.xuan.lib.model.IMixModel;
-
-import java.util.List;
 
 import static com.study.xuan.lib.Type.TYPE_EDIT;
 import static com.study.xuan.lib.Type.TYPE_HEAD;
@@ -40,6 +37,6 @@ public class ComponentFactory {
                 mConponent = new HeadComponent(mContext);
                 break;
         }
-        return mConponent.getViewHolder(parent);
+        return mConponent.createViewHolder(parent);
     }
 }

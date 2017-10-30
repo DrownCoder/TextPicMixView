@@ -18,4 +18,8 @@ public interface IMixModel {
     boolean hasFocus();
 
     void setFocus(boolean hasFocus);
+
+    String getDefault();
+
+    void setDefault(String df);
 }

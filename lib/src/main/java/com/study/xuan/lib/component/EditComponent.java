@@ -1,19 +1,15 @@
 package com.study.xuan.lib.component;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.study.xuan.lib.MixViewHolder;
 import com.study.xuan.lib.R;
-import com.study.xuan.lib.model.IMixModel;
+import com.study.xuan.lib.model.MixModel;
 
-import java.util.List;
+import static com.study.xuan.lib.Type.TYPE_EDIT;
 
 /**
  * Author : xuan.
@@ -33,8 +29,8 @@ public class EditComponent extends IComponent {
     }
 
     @Override
-    public MixViewHolder getViewHolder(ViewGroup parent) {
-        return new EditHolder(getView(parent));
+    public MixViewHolder getViewHolder(View root) {
+        return new EditHolder(root);
     }
 
     class EditHolder extends MixViewHolder {
@@ -46,51 +42,57 @@ public class EditComponent extends IComponent {
         }
 
         @Override
-        public void bind(final RecyclerView.Adapter adapter, final List<IMixModel> datas, final
-        int pos) {
+        public void bind() {
             if (datas.get(pos).hasFocus()) {
                 mEdit.setFocusable(true);
                 mEdit.setFocusableInTouchMode(true);
                 mEdit.requestFocus();
             } else {
-                mEdit.clearFocus();
+                mEdit.setFocusable(false);
             }
-            mEdit.removeTextChangedListener((TextWatcher) mEdit.getTag());
+            mEdit.removeTextChangedListener(mWatcher);
             mEdit.setText(datas.get(pos).getSource());
-            mWatcher = new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    datas.get(pos).setSource(editable.toString());
-                }
-            };
+            mEdit.setSelection(datas.get(pos).getSource().length());
+            mEdit.setHint(datas.get(pos).getDefault());
             mEdit.addTextChangedListener(mWatcher);
-            mEdit.setTag(mWatcher);
             mEdit.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                    if (i == KeyEvent.KEYCODE_DEL) {
-                        if (((EditText) view).getSelectionStart() == 0) {
-                            if (pos > 1) {
-                                datas.get(pos - 1).setFocus(true);
-                                datas.get(pos - 1).append(datas.get(pos).getSource());
-                                datas.remove(pos);
-                                adapter.notifyDataSetChanged();
-                            }
+                    if (keyEvent != null && keyEvent.getAction() == keyEvent.ACTION_DOWN) {
+                        switch (i) {
+                            case KeyEvent.KEYCODE_DEL:
+                                //删除
+                                doDel(view);
+                                break;
+                            case KeyEvent.KEYCODE_ENTER:
+                                //回车
+                                doEnter();
+                                break;
                         }
                     }
                     return false;
                 }
             });
+        }
+
+        private void doEnter() {
+            datas.add(new MixModel(TYPE_EDIT, "", true, ""));
+            adapter.notifyDataSetChanged();
+        }
+
+        private void doDel(View view) {
+            if (((EditText) view).getSelectionStart() == 0) {
+                if (pos > 1) {
+                    datas.get(pos - 1).append(datas.get(pos).getSource());
+                    datas.remove(pos);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+        @Override
+        public void onTextChange(String s) {
+            datas.get(pos).setSource(s);
         }
     }
 }

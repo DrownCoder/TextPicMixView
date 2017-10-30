@@ -11,11 +11,13 @@ public class MixModel implements IMixModel {
     int type;
     String source;
     boolean hasFocus;
+    String df;
 
-    public MixModel(int typeText, String s,boolean hasFocus) {
+    public MixModel(int typeText, String s,boolean hasFocus,String df) {
         type = typeText;
         source = s;
         this.hasFocus = hasFocus;
+        this.df = df;
     }
 
     @Override
@@ -45,5 +47,15 @@ public class MixModel implements IMixModel {
 
     public void setFocus(boolean hasFocus) {
         this.hasFocus = hasFocus;
+    }
+
+    @Override
+    public String getDefault() {
+        return df;
+    }
+
+    @Override
+    public void setDefault(String df) {
+        this.df = df;
     }
 }

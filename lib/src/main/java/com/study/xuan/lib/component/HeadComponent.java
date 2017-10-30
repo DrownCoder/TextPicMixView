@@ -32,8 +32,8 @@ public class HeadComponent extends IComponent {
     }
 
     @Override
-    public MixViewHolder getViewHolder(ViewGroup parent) {
-        return new HeadHolder(getView(parent));
+    public MixViewHolder getViewHolder(View root) {
+        return new HeadHolder(root);
     }
 
     public class HeadHolder extends MixViewHolder {
@@ -53,8 +53,9 @@ public class HeadComponent extends IComponent {
         }
 
         @Override
-        public void bind(RecyclerView.Adapter adapter, List<IMixModel> mixModel, int pos) {
-            mTvHead.setText(mixModel.get(pos).getSource());
+        public void bind() {
+            mTvHead.setHint(datas.get(pos).getDefault());
+            mTvHead.setText(datas.get(pos).getSource());
         }
     }
 }

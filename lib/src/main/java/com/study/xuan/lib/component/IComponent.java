@@ -25,7 +25,13 @@ public abstract class IComponent {
                 .inflate(getLayoutId(), parent, false);
     }
 
+    public MixViewHolder createViewHolder(ViewGroup parent){
+        return getViewHolder(getView(parent));
+    }
+
     public abstract int getLayoutId();
 
-    public abstract MixViewHolder getViewHolder(ViewGroup parent);
+
+    public abstract MixViewHolder getViewHolder(View root);
+
 }

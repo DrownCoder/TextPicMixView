@@ -49,8 +49,8 @@ public class TextPicMixView extends RecyclerView {
     }
 
     private void initData() {
-        IMixModel head = new MixModel(TYPE_HEAD, "", true);
-        IMixModel Edit = new MixModel(TYPE_EDIT, "", true);
+        IMixModel head = new MixModel(TYPE_HEAD, "", true, "写个标题吧");
+        IMixModel Edit = new MixModel(TYPE_EDIT, "", true, "这里是编辑区域");
         mDatas = new LinkedList<>();
         mDatas.add(head);
         mDatas.add(Edit);
@@ -63,12 +63,12 @@ public class TextPicMixView extends RecyclerView {
     }
 
     public void addPic() {
-        mDatas.add(new MixModel(TYPE_IMG, "",true));
+        mDatas.add(new MixModel(TYPE_IMG, "",true,""));
         mAdapter.notifyDataSetChanged();
     }
 
     public void addText() {
-        mDatas.add(new MixModel(TYPE_EDIT, "",true));
+        mDatas.add(new MixModel(TYPE_EDIT, "",true,""));
         mAdapter.notifyDataSetChanged();
     }
 }
